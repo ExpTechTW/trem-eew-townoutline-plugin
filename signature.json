@@ -1,0 +1,10 @@
+{
+  "timestamp": 1761294647410,
+  "version": "1.0.0",
+  "fileHashes": {
+    "index.js": "a492680da2a9c8925a0fbc0dc95ee7feeea1a35c97730f9568d0d64e13d66d1c",
+    "info.json": "dcf93c528b0e25fc333c25cc9f316e1529398d39abdc07e26dfe69db095d0296"
+  },
+  "signature": "ycQtAo/K0knDK+5SVVy1eaQpndeWytYOfa6nFyoT5NaHRHWlsX+EDcrRC/Apu42+6ntm7Zelg+H5HqVNdM65jCpvpD5ELSSIzq3/1VNoExquadzWN4flf8ZTQ5afiZX0h/KsvCT42oGnQ6KH7eHGTMyoasMP6B1ZL3ojBptdEW2pONbP3iSVvR2gh4YZnENpDuxMboOQa0IHoWAvYj2bFBAyUw2pdixZxo2lc+DJ9UuTvcrrFE1KQ9u4he/GmaC1wSXZgti9d9ZlIUSm53mDbnH3p8PxEYvsyyY66cA7yBhWGUO9uRljGXHszz22JH8fS3U4W3NcvmdMl27DoqWjyg==",
+  "keyId": "official"
+}
