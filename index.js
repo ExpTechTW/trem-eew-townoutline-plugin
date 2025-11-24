@@ -17,34 +17,11 @@ class Plugin {
   onLoad() {
     const { TREM, logger} = this.#ctx;
     this.logger = logger;
-    if (TREM.variable.events) {
-      TREM.variable.events.on("MapLoad", (map) => {
-        const IntensityTownOutline = () => {
-          if (map.getLayer("town-outline")) map.removeLayer("town-outline");
-          setTimeout(() => {
-            if (map.getLayer("town-outline")) return;
-            map.addLayer({
-              id: "town-outline",
-              type: "line",
-              source: "map",
-              "source-layer": "town",
-              layout: { visibility: "visible" },
-              paint: { "line-color": TREM.constant.COLOR.MAP.TW_COUNTY_OUTLINE },
-            }, beforeLayer);
-          }, 7500);
-        };
-
-        const CoverLayers = ['rts-layer', 'report-markers'];
-        let beforeLayer;
-        for (let i = CoverLayers.length - 1; i >= 0; i--) {
-          if (map.getLayer(CoverLayers[i])) {
-            beforeLayer = CoverLayers[i];
-            break;
-          }
-        }
-
-        TREM.variable.events.on("EewRelease", (ans) => {
-          if (ans.author != 'cwa' && ans.author != 'trem') return;
+    const event = (event, callback) => TREM.variable.events.on(event, callback);
+    event("MapLoad", (map) => {
+      const IntensityTownOutline = () => {
+        if (map.getLayer("town-outline")) map.removeLayer("town-outline");
+        setTimeout(() => {
           if (map.getLayer("town-outline")) return;
           map.addLayer({
             id: "town-outline",
@@ -54,14 +31,39 @@ class Plugin {
             layout: { visibility: "visible" },
             paint: { "line-color": TREM.constant.COLOR.MAP.TW_COUNTY_OUTLINE },
           }, beforeLayer);
-        });
-        TREM.variable.events.on("EewEnd", () => {
-          if (map.getLayer("town-outline")) map.removeLayer("town-outline");
-        });
-        TREM.variable.events.on("IntensityRelease", IntensityTownOutline);
-        TREM.variable.events.on("IntensityUpdate", IntensityTownOutline);
+        }, 7500);
+      };
+
+      const CoverLayers = ['rts-layer', 'report-markers'];
+      let beforeLayer;
+      for (let i = CoverLayers.length - 1; i >= 0; i--) {
+        if (map.getLayer(CoverLayers[i])) {
+          beforeLayer = CoverLayers[i];
+          break;
+        }
+      }
+
+      event("EewRelease", (ans) => {
+        const author = ans.data.author;
+        if (author != 'cwa' && author != 'trem') return;
+        if (map.getLayer("town-outline")) return;
+        map.addLayer({
+          id: "town-outline",
+          type: "line",
+          source: "map",
+          "source-layer": "town",
+          layout: { visibility: "visible" },
+          paint: { "line-color": TREM.constant.COLOR.MAP.TW_COUNTY_OUTLINE },
+        }, beforeLayer);
       });
-    }
+
+      event("EewEnd", () => {
+        if (map.getLayer("town-outline")) map.removeLayer("town-outline");
+      });
+
+      event("IntensityRelease", IntensityTownOutline);
+      event("IntensityUpdate", IntensityTownOutline);
+    });
   }
 }
 
