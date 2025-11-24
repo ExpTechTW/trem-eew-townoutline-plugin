@@ -42,8 +42,9 @@ class Plugin {
             break;
           }
         }
-        
-        TREM.variable.events.on("EewRelease", () => {
+
+        TREM.variable.events.on("EewRelease", (ans) => {
+          if (ans.author != 'cwa' && ans.author != 'trem') return;
           if (map.getLayer("town-outline")) return;
           map.addLayer({
             id: "town-outline",
